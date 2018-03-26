@@ -48,26 +48,24 @@
         </aside>
       </div> -->
       <div class="column is-9">
-        <!-- <nav class="breadcrumb" aria-label="breadcrumbs">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
           <ul>
-            <li><a href="../">Bulma</a></li>
-            <li><a href="../">Templates</a></li>
-            <li><a href="../">Examples</a></li>
-            <li class="is-active"><a href="#" aria-current="page">Admin</a></li>
+            <li><a href="../">Dashboard</a></li>
+            <li class="is-active"><a href="#" aria-current="page">User</a></li>
           </ul>
         </nav>
          <section class="hero is-info welcome is-small">
           <div class="hero-body">
             <div class="container">
               <h1 class="title">
-                Hello, Admin.
+                Hello, {{ Auth::user()->name }}.
               </h1>
               <h2 class="subtitle">
                 I hope you are having a great day!
               </h2>
             </div>
           </div>
-        </section> -->
+        </section>
 
         <!-- stats bar component -->
         <section class="info-tiles">
@@ -100,11 +98,31 @@
         </section>
 
         <section id="new_task" class="section">
-        
-        </section>
-        
-        <!-- New Task Form -->
-        <section class="section" id="form" style="display:none;">
+          <div class="panel">
+            <div class="panel-heading" style="padding-bottom:16px;">Tasks
+              <div class="field has-addons is-pulled-right">
+              <div class="control">
+                <button id="add_task_btn" class="button tag is-medium has-text-grey-dark">
+                  <i class="fa fa-plus fa-1x"></i>
+                </button>
+              </div> 
+            </div>
+            </div>
+            
+                  
+            <div class="panel-block">
+              <p class="control has-icons-left">
+                <input class="input is-small" type="text" placeholder="Search">
+                <span class="icon is-small is-left">
+                  <i class="fa fa-search"></i>
+                </span>
+              </p>
+            </div>
+          
+            <div class="panel-block" id="form" style="display:none;">
+            
+            <!-- New Task Form -->
+        <div class="container" >
           <h1 class="Title">New Task</h1>
           <hr>
 
@@ -124,11 +142,6 @@
                 <p class="card-header-title">
                   Areas of Interest
                 </p>
-                <a id="delete_all_areas" class="card-header-icon">
-                <span class="tag is-danger"> Delete All &nbsp;&nbsp;
-                    <i class="fa fa-trash" aria-hidden="true"></i>
-                </span>
-                </a>
                 <a id="area_colapse" class="card-header-icon" aria-label="more options">
                   <span class="icon">
                     <i class="fa fa-2x fa-angle-up" aria-hidden="true"></i>
@@ -137,7 +150,7 @@
               </header>
                 <div class="card-table" id="book">
                   <div class="content">
-                    <table id="area_table" class="table is-fullwidth is-striped">
+                    <table id="area_table" class="table is-fullwidth is-narrow is-striped is-hoverable">
                       <tbody>
                         <tr><td>Please add an area...</td></tr>
                       </tbody>
@@ -145,7 +158,13 @@
                   </div>  <!-- end content -->
                 </div>  <!-- end card-table -->
                 <footer class="card-footer">
-                  <a href="#" class="card-footer-item">View All</a>
+                  <a href="#" class="card-footer-item"></a>
+                  <a id="delete_all_areas" class="card-footer-item">
+                    <span class=""> 
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                        Delete All
+                    </span>
+                  </a>
                 </footer>
               </div> <!-- end card events-card -->
             </div> <!-- end field -->
@@ -171,7 +190,7 @@
               </div>    <!-- end field -->
 
 
-          <hr>
+          <!-- <hr> -->
           <h4 class="subtitle">2. Add Machine Learning Models</h4>
 
           <!-- <div class="field">
@@ -232,64 +251,83 @@
         </div>
          <div class="field">&nbsp;&nbsp;</div>
          
-         <hr>
+         <!-- <hr> -->
           <h4 class="subtitle">3. Additional Parameters</h4>
 
 
         <div class="card">
           <div class="card-content">
-          <div class="field">
-            <label class="label">Task Name</label>
-              <p class="control">
-                <input class="input" id="task_name" type="text" name="task_name" placeholder="Your task name" required>
-              </p>
-          </div>
-
-          <div class="field">
-          <label class="label">Start Date</label>
-            <p class="control">
-              <input class="input" id="start_date" type="date" name="start_date" required>
-            </p>
-          </div>
-
-          <div class="field">
-          <label class="label">End Date <span class="has-text-danger">*</span><label>
-            <p class="control">
-              <input class="input" id="end_date" type="date" name="end_date">
-            </p>
-          </div>
-
-          <div class="field">
-            <div class="control">
-              <label class="radio">
-                <input id="play_btn" type="radio" name="question" checked>
-                Play
-              </label>
-              <label class="radio">
-                <input type="radio" name="question">
-                Paused
-              </label>
+            <div class="field">
+              <label class="label">Task Name</label>
+                <p class="control">
+                  <input class="input" id="task_name" type="text" name="task_name" placeholder="Your task name" required>
+                </p>
             </div>
-          </div>
 
-          <div class="content">
-            <p> <small>* Not setting a value for End Date will indicate that the task should be ongoing.</small></p>
-          </div>
+            <div class="field">
+            <label class="label">Start Date</label>
+              <p class="control">
+                <input class="input" id="start_date" type="date" name="start_date" required>
+              </p>
+            </div>
+
+            <div class="field">
+            <label class="label">End Date <span class="has-text-danger">*</span><label>
+              <p class="control">
+                <input class="input" id="end_date" type="date" name="end_date">
+              </p>
+            </div>
+
+            <div class="field">
+              <div class="control">
+                <label class="radio">
+                  <input id="play_btn" type="radio" name="question" checked>
+                  Play
+                </label>
+                <label class="radio">
+                  <input id="pause_btn" type="radio" name="question">
+                  Paused
+                </label>
+              </div>
+            </div>
+
+            <div class="content">
+              <p> <small>* Not setting a value for End Date will indicate that the task should be ongoing.</small></p>
+            </div>
 
           <!-- <div class="field">&nbsp;&nbsp;</div> -->
 
-          <div class="field">
-            <p class="control is-fullWidth">
-              <button type="submit" id="submit_task_btn" class="button is-success is-medium is-fullWidth">
-                <span>Submit</span>
-              </button>
-            </p>
-          </div>
+            <div class="field">
+              <p class="control is-fullWidth">
+                <button type="submit" id="submit_task_btn" class="button is-success is-medium is-fullWidth">
+                  <span>Submit</span>
+                </button>
+              </p>
+            </div>
 
           <div>
           </div> <!-- end card -->
 
-        </section> <!-- end section -->
+        </div>
+        </div>
+        </div> <!-- end of section div -->
+
+            </div>
+            <div id="task_table">
+             
+           </div> <!-- end task_table -->
+
+            <p class="panel-tabs">
+              <a class="is-active">All</a>
+              <a>Playing</a>
+              <a>Paused</a>
+            </p>
+            
+                        
+          </div>
+        </section>
+        
+        
 
    
       </div> <!-- end column is-9 -->
@@ -579,8 +617,8 @@
             '<tr id="' + layer_id + '">'
            // +'<td><span class="icon is-small is-right"><i class="fa fa-check"></i></span></td>'
             +'<td>' + table_length +'.</td>'
-            +'<td>' + shape + '</td>'
-            +'<td><a onclick="moveMap('+layer_id+',' + data.zoom+')" class="link">View</a></td>'
+            +'<td>[ ' + shape + ' ]</td>'
+            +'<td><a onclick="moveMap('+layer_id+',' + data.zoom+')" class="link">[ View ]</a></td>'
             +'<td><a onclick="removeAreaFromMapAndTable('+layer_id+')" class="button is-small is-pulled-right" id="delete_area_item">'
             + '<span class="icon is-small"><i class="fa  fa-trash"></i>'
             + '</span></a></td>'
@@ -620,5 +658,43 @@
             $(this).children("td:first").text(i+1+'.');
           });
         }
+        
+        function showTaskDetails(num) {
+          //hide any open task details
+         
+          // console.log($("#task_table > .panel-block").eq(num).next().is(":visible"));
+          //$("#task_table > .panel-block").next().hide();
+          if ($("#task_table > .panel-block").eq(num).next().is(":visible") == false) {
+            
+            $("#task_table > div:nth-child("+(num+1)+") > div.container > div > a > div > span.tag.is-white > i").removeClass("fa-chevron-right");
+            $("#task_table > div:nth-child("+(num+1)+") > div.container > div > a > div > span.tag.is-white > i").addClass("fa-chevron-down");
+            $("#task_table > .panel-block").eq(num).next().show();
+          }
+          else {
+            
+            $("#task_table > div:nth-child("+(num+1)+") > div.container > div > a > div > span.tag.is-white > i").removeClass("fa-chevron-down");
+            $("#task_table > div:nth-child("+(num+1)+") > div.container > div > a > div > span.tag.is-white > i").addClass("fa-chevron-right");
+            $("#task_table > .panel-block").eq(num).next().hide();
+          }
+          //#task_table > div:nth-child(3) > div.container > div > a > div > span.tag.is-white > i
+          //#task_table > div:nth-child(1) > div.container > div > a > div > span.tag.is-white > 
+          //#task_table > div:nth-child(3) > div.container > div > a > div > span.tag.is-white > i
+          //$("#task_table > div:nth-child("+(num+1)+") > div.container > div > a > div > span.tag.is-white > i").toggle();
+          
+          
+          // $("#book").slideToggle("fast", function () {
+          //     // animation complete
+          //     if ($("#book").is(':visible') === false) {
+          //         $('#area_colapse > span > i').removeClass("fa-angle-up");
+          //         $('#area_colapse > span > i').addClass("fa-angle-down");
+          //     }
+          //     else {
+          //         $('#area_colapse > span > i').removeClass("fa-angle-down");
+          //         $('#area_colapse > span > i').addClass("fa-angle-up");
+          //     }
+
+          // });
+      }
+
    </script>
 @endsection

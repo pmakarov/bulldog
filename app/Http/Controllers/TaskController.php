@@ -24,7 +24,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::with('geometries:id,name,polygon', 'machine_learning_models:id,name,object,algorithm_id')
+        $tasks = Task::with('geometries:id,name,polygon', 'machine_learning_models:id,name,object,algorithm_id')->orderBy('created_at', 'desc')
         ->get(['id', 'name', 'user_id', 'status', 'start_date', 'end_date'])->where('user_id', Auth::user()->id);
 
         return $tasks;

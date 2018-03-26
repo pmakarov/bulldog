@@ -3,7 +3,7 @@ html, body , main{
     font-size: 16px;
     line-height: 1.5;
     
-    background-color: #ECF0F3;
+    background-color: #ecf0f1;
     
   }
   nav.navbar {
@@ -60,8 +60,8 @@ html, body , main{
   }
   .hero.welcome.is-info {
     background: #36D1DC;
-    background: -webkit-linear-gradient(to right, #34495e, #1abc9c);
-    background: linear-gradient(to right, #34495e, #1abc9c);
+    background: -webkit-linear-gradient(to right, #34495e, #3a5b7c);
+    background: linear-gradient(to right, #34495e, #3a5b7c);
   }
   .hero.welcome .title, .hero.welcome .subtitle {
     color: hsl(192, 17%, 99%);
@@ -83,3 +83,41 @@ html, body , main{
     max-height: 250px;
     overflow-y: scroll;
   }
+
+.panel-block {
+  background-color: #fafafa;
+}
+
+  /* footer settings **/
+
+main {
+  overflow: auto;
+  padding-bottom: 260px;
+  /* must be same height as the footer */
+}
+
+#footer {
+  position: relative;
+  margin-top: -180px;
+  /* negative value of footer height */
+  height: 260px;
+  clear: both;
+}
+
+/** task panel styles **/
+.panel-item {
+  padding-left:10px; 
+  padding-right:10px; 
+  border-right: 1px #C0C0C0 solid;
+  white-space: nowrap;
+}
+
+.panel-item.item-name {
+  width:100%;
+  overflow: hidden;
+}
+
+#task_details {
+  height:400px;
+  background-color:#FAFAFA;
+}

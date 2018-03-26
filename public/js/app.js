@@ -13896,21 +13896,38 @@ $(document).ready(function () {
         dataType: "json",
         success: function success(data) {
             console.log(data);
-            // // Get select
-            // var select = document.getElementById('algorithm_select');
+            if (data.length === 0) {
+                $("#task_table div:first").remove();
+                $("#task_table").append('<div class="panel-block">You currently do not have any tasks...</div>');
+            } else {
+                $("#task_table div:first").remove();
+                var html_string = '';
+                for (var i = 0; i < data.length; i++) {
 
-            // // clear default options
-            // $("#algorithm_select > option").remove();
+                    html_string += '<div class="panel-block">\n                          <div class="panel-item">\n                            <span class="icon"> <i class="fa fa-pause"></i> </span>\n                          </div>\n                          <div class="panel-item item-name" > ' + data[i].name + '\n                          </div>\n                          <div class="panel-item is-hidden-touch" ><span class="icon"> <i class="fa fa-map"></i> </span> ' + data[i].geometries.length + ' Areas of Interest\n                          </div>\n                          <div class="panel-item is-hidden-touch" > ';
 
-            // // Add options
-            // for (var i in data) {
-            //     $(select).append('<option value=' + data[i].id + '>' + data[i].name + '</option>');
-            // }
+                    for (var j = 0; j < data[i].machine_learning_models.length; j++) {
+                        html_string += '<div class="tag is-primary">' + data[i].machine_learning_models[j].object + '</div>';
+                    }
 
-            // // Set selected value
-            // $(select).val(data[1]);
-            // $("#algorithm_select > option:first").prop('selected', 'selected');
+                    html_string += '</div>\n                          <div class="container"> \n                            <div class="is-pulled-right">\n                              <a onclick="showTaskDetails(' + i + ')" class="has-text-grey-dark">\n                              <div class="tags has-addons">\n                              <span class="tag is-dark is-hidden-touch">Details</span>\n                              <span class="tag is-info">14</span>\n                              <span class="tag is-white"> <i class="fa fa-chevron-right"></i> </span>\n                              </div>\n                                \n                              </a>\n                            </div>\n                          </div>\n                        </div><div id="task_details" style="display:none;">' + data[i] + '</div>';
+                }
+
+                $("#task_table").append(html_string);
+            }
         }
+    });
+
+    $("#add_task_btn").click(function () {
+
+        $("#form").toggle();
+        mymap.invalidateSize();
+        // $('html, body').animate({
+        //     scrollTop: $("#form").offset().top
+        // }, 1000)
+
+        $("#add_task_btn > i").toggleClass("fa-plus");
+        $("#add_task_btn > i").toggleClass("fa-minus");
     });
 
     $("#area_colapse").click(function () {
@@ -14000,6 +14017,29 @@ $(document).ready(function () {
             success: function success(data) {
                 console.log(data);
                 $("submit_task_btn").removeClass("is-loading");
+                //TODO: 1. clear form feilds and reset
+                // 2. add Task row
+                $("#delete_all_areas").trigger("click");
+                $("#start_date").val(0);
+                $("#end_date").val(0);
+                //$("#play_btn").prop("")
+                $("#task_name").val("");
+                $('#model_table tr:not(:first-child)').remove();
+                $("#ml_model_name").val("");
+                $("#ml_model_object").val("");
+                $("#algorithm_select > option:first").prop('selected', 'selected');
+                $("#add_task_btn").trigger("click");
+
+                var html_string = "";
+                html_string += '<div class="panel-block">\n                          <div class="panel-item">\n                            <span class="icon"> <i class="fa fa-pause"></i> </span>\n                          </div>\n                          <div class="panel-item item-name" > ' + task_data.name + '\n                          </div>\n                          <div class="panel-item is-hidden-touch" ><span class="icon"> <i class="fa fa-map"></i> </span> ' + task_data.areas.length + ' Areas of Interest\n                          </div>\n                          <div class="panel-item is-hidden-touch"> ';
+
+                for (var j = 0; j < task_data.models.models.length; j++) {
+                    html_string += '<div class="tag is-primary">' + task_data.models.models[j].object + '</div>';
+                }
+
+                html_string += '</div>\n                          <div class="container"> \n                            <div class="is-pulled-right">\n                              <a onclick="showTaskDetails(0)" class="has-text-grey-dark">\n                              <div class="tags has-addons">\n                              <span class="tag is-dark is-hidden-touch">Details</span>\n                              <span class="tag is-info">14</span>\n                              <span class="tag is-white"> <i class="fa fa-chevron-right"></i> </span>\n                              </div>\n                                \n                              </a>\n                            </div>\n                          </div>\n                        </div><div id="task_details" style="display:none;">' + task_data + '</div>';
+
+                $("#task_table").append(html_string);
             },
             error: function error(XMLHttpRequest, textStatus, errorThrown) {
                 console.log("Message:" + XMLHttpRequest.responseJSON.message);

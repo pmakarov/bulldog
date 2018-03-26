@@ -86,6 +86,29 @@
     <main id="">
       @yield('content')
     </main>
+    <footer class="footer">
+    <div class="container">
+      <div class="content has-text-centered">
+        <p>
+          <strong>&copy; 
+            <?php
+            $fromYear = 2017;
+            $thisYear = (int)date('Y');
+            echo $fromYear . (($fromYear != $thisYear) ? '-' . $thisYear : '');
+            ?>
+          </strong> - <a href="https://radiantsolutions.com">Radiant Solutions</a>. The source code is licensed
+          <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.
+        </p>
+        <p>
+          <a class="icon" href="https://github.com/pmakarov/bulldog">
+            <i class="fa fa-github"></i>
+          </a>
+          Check us out on Git.
+        </p>
+      </div>
+    </div>
+  </footer>
+
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
 </body>
